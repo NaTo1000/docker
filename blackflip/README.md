@@ -85,7 +85,7 @@ exports `FLIPPER_SERIAL` for use by scripts and tools.
 | Variable                 | Default      | Description                            |
 |--------------------------|-------------|----------------------------------------|
 | `BLACKFLIP_GUI`          | `0`         | Set to `1` to start XFCE over VNC      |
-| `VNC_PASSWORD`           | `blackflip` | VNC session password                    |
+| `VNC_PASSWORD`           | *(random)*  | VNC session password (auto-generated if unset) |
 | `BLACKFLIP_FLIPPER_AUTO` | `1`         | Auto-detect Flipper Zero on USB         |
 | `BLACKFLIP_VERSION`      | `1.0.0`     | Shown in the splash banner              |
 
@@ -121,6 +121,21 @@ To build specifically for Raspberry Pi 5 (arm64) from a different host:
 docker buildx create --use
 docker buildx build --platform linux/arm64 -t blackflip --load .
 ```
+
+---
+
+## Security considerations
+
+- **Passwordless sudo**: The `blackflip` user has passwordless `sudo` access
+  so that security tools requiring root can be run interactively.  This is
+  standard practice for penetration-testing distributions (BlackArch, Kali,
+  Parrot, etc.) but means the container should **not** be exposed on
+  untrusted networks without additional hardening.
+- **VNC password**: If `VNC_PASSWORD` is not set, a random 12-character
+  password is generated at startup and printed to the console.  Always set
+  your own strong password when deploying in shared environments.
+- **Privileged mode**: The `--privileged` flag is needed for USB (Flipper
+  Zero) and WiFi adapter access.  Only use it on trusted hosts.
 
 ---
 

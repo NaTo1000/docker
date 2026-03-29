@@ -12,9 +12,14 @@ if [ "${BLACKFLIP_GUI:-0}" = "1" ]; then
 
     # Ensure the VNC password directory exists
     mkdir -p "$HOME/.vnc"
-    # Set a default VNC password if none exists
+    # Set VNC password — generate a random one if the user did not provide one
     if [ ! -f "$HOME/.vnc/passwd" ]; then
-        echo "${VNC_PASSWORD:-blackflip}" | vncpasswd -f > "$HOME/.vnc/passwd"
+        if [ -z "${VNC_PASSWORD:-}" ]; then
+            VNC_PASSWORD=$(head -c 12 /dev/urandom | base64 | tr -dc 'a-zA-Z0-9' | head -c 12)
+            echo -e "\033[1;33m[BlackFlip]\033[0m Generated VNC password: ${VNC_PASSWORD}"
+            echo -e "\033[1;33m[BlackFlip]\033[0m Set VNC_PASSWORD env var to use your own."
+        fi
+        echo "$VNC_PASSWORD" | vncpasswd -f > "$HOME/.vnc/passwd"
         chmod 600 "$HOME/.vnc/passwd"
     fi
 

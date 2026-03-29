@@ -84,6 +84,8 @@ RUN pacman -S --noconfirm --needed \
         screen \
         minicom \
         picocom && \
+    # --break-system-packages is safe here: this is a single-purpose
+    # container image where pip and pacman coexist by design.
     pip install --break-system-packages ufbt && \
     pacman -Scc --noconfirm
 
