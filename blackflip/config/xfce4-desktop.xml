@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- BlackFlip XFCE desktop — solid dark background -->
+<channel name="xfce4-desktop" version="1.0">
+  <property name="backdrop" type="empty">
+    <property name="screen0" type="empty">
+      <property name="monitorVNC-0" type="empty">
+        <property name="workspace0" type="empty">
+          <property name="color-style"  type="int"    value="0"/>
+          <property name="image-style"  type="int"    value="0"/>
+          <property name="last-image"   type="string" value=""/>
+          <property name="rgba1"        type="array">
+            <!-- BlackArch dark background: #0d0d0d -->
+            <value type="uint" value="3341"/>
+            <value type="uint" value="3341"/>
+            <value type="uint" value="3341"/>
+            <value type="uint" value="65535"/>
+          </property>
+        </property>
+      </property>
+    </property>
+  </property>
+</channel>
